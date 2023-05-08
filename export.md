@@ -11,11 +11,12 @@ pip3 install ultralytics
 
 # export onnx model from pt model
 - Download .pt models to pretrained_model folder
-- batch export (onnx models are saved in pretrained_model/onnx_model)
+- Export
+    - batch export (onnx models are saved in pretrained_model/onnx_model)
     ```
     bash export.sh
     ```
-- single export
+    - single export
     ```
     # lion-11
     yolo export model=yolov8n.pt format=onnx imgsz=(960,640) half=true 
@@ -26,7 +27,7 @@ pip3 install ultralytics
     #simplify	False	ONNX/TensorRT: simplify model
     #opset	None	ONNX: opset version (optional, defaults to latest) 
     ```
-
+- Note: Next, we export onnx to plan at Jetson Nx or Nano device (refer to branch [nx-1](https://github.com/zl-cs/ultralytics/blob/nx-1/export.md) and [nano-2](https://github.com/zl-cs/ultralytics/blob/nano-2/export.md))
     ```
     # nx-1, --minShapes=images:1x3x640x640 --maxShapes=images:10x3x640x640 --optShapes=images:3x3x640x640
     cd 
