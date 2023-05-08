@@ -20,12 +20,13 @@ pip3 install ultralytics
     ```
     # lion-11
     yolo export model=yolov8n.pt format=onnx imgsz=(960,640) half=true 
+
     ### other config params and their default value
-    #imgsz	640	image size as scalar or (h, w) list, i.e. (640, 480)
-    #half	False	FP16 quantization
-    #dynamic	False	ONNX/TensorRT: dynamic axes
-    #simplify	False	ONNX/TensorRT: simplify model
-    #opset	None	ONNX: opset version (optional, defaults to latest) 
+    #  imgsz	640	    image size as scalar or (h, w) list, i.e. (640, 480)
+    #  half	    False	FP16 quantization
+    #  dynamic	False	ONNX/TensorRT: dynamic axes
+    #  simplify	False	ONNX/TensorRT: simplify model
+    #  opset	None	ONNX: opset version (optional, defaults to latest) 
     ```
 - Note: Next, we export onnx to plan at Jetson Nx or Nano device (refer to branch [nx-1](https://github.com/zl-cs/ultralytics/blob/nx-1/export.md) and [nano-2](https://github.com/zl-cs/ultralytics/blob/nano-2/export.md))
     ```
@@ -36,6 +37,13 @@ pip3 install ultralytics
     cd /home/nvidia/software/otherdisk
     /usr/src/tensorrt/bin/trtexec --onnx=yolov8n.onnx --saveEngine=yolov8n.plan --workspace=1024 --inputIOFormats=fp16:chw --outputIOFormats=fp16:chw --fp16 
     ``` 
+
+# Train command
+```
+yolo detect train data=coco.yaml model=yolov8n.yaml imgsz=320 device=0,1,2,3 save_dir=runs/detect/yolov8x_320p_train #lion-11
+yolo detect train data=coco.yaml model=yolov8n.yaml pretrained=yolov8n.pt epochs=20 imgsz=320 device=0,1,2,3 save_dir='runs/detect/yolov8n_320p_train_pretrained'  #lion-10
+``` 
+
 
 # Val command
 ```
