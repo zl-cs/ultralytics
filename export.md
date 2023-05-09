@@ -12,4 +12,6 @@
     ```
     bash export_plan.sh
     ```
-
+    ```
+    /usr/src/tensorrt/bin/trtexec --onnx=yolov8n_640_offical.onnx --saveEngine=yolov8n_640_offical.plan --workspace=1024 --inputIOFormats=fp16:chw --outputIOFormats=fp16:chw --fp16
+    ```
