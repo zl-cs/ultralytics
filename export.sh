@@ -25,7 +25,7 @@ do
         h=$[((($re/16)*9+32-1)/32)*32]
 
         echo "==================== $model.pt with $re*$h to $model.onnx ===================="
-        yolo export model=$ModelPath/$model.pt format=onnx imgsz=$re,$h half=true 
+        yolo export model=$ModelPath/$model.pt format=onnx imgsz=$h,$re half=true 
         mv $ModelPath/$model.onnx $OnnxModelPath/$model\_$re.onnx
     done
 done

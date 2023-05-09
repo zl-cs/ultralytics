@@ -135,6 +135,7 @@ dmypy.json
 datasets/
 runs/
 wandb/
+pretrained_model/
 
 .DS_Store
 
