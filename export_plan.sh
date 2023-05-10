@@ -9,7 +9,7 @@ fi
 
 # all resolution of each yolov8x costs about 1 hour
 #yolov8n yolov8s yolov8m 
-model_list="yolov8s yolov8m"
+model_list="yolov8n yolov8s yolov8m"
 w_list="320 640 960 1280 1920"
 
 for model in $model_list
