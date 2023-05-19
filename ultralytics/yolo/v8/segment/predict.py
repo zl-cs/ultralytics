@@ -5,6 +5,7 @@ import torch
 from ultralytics.yolo.engine.results import Results
 from ultralytics.yolo.utils import DEFAULT_CFG, ROOT, ops
 from ultralytics.yolo.v8.detect.predict import DetectionPredictor
+import time
 
 
 class SegmentationPredictor(DetectionPredictor):
@@ -15,6 +16,7 @@ class SegmentationPredictor(DetectionPredictor):
 
     def postprocess(self, preds, img, orig_imgs):
         """TODO: filter by classes."""
+        start = time.time()
         p = ops.non_max_suppression(preds[0],
                                     self.args.conf,
                                     self.args.iou,
@@ -22,6 +24,8 @@ class SegmentationPredictor(DetectionPredictor):
                                     max_det=self.args.max_det,
                                     nc=len(self.model.names),
                                     classes=self.args.classes)
+        end = time.time()
+        print("post time:",(end-start)*1000)
         results = []
         proto = preds[1][-1] if len(preds[1]) == 3 else preds[1]  # second output is len 3 if pt, but only 1 if exported
         for i, pred in enumerate(p):
@@ -37,6 +41,8 @@ class SegmentationPredictor(DetectionPredictor):
                 masks = ops.process_mask_native(proto[i], pred[:, 6:], pred[:, :4], orig_img.shape[:2])  # HWC
             else:
                 masks = ops.process_mask(proto[i], pred[:, 6:], pred[:, :4], img.shape[2:], upsample=True)  # HWC
+                print("mask shape:",masks.shape)
+                print("mask:",masks)
                 if not isinstance(orig_imgs, torch.Tensor):
                     pred[:, :4] = ops.scale_boxes(img.shape[2:], pred[:, :4], orig_img.shape)
             results.append(
